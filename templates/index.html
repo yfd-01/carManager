@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ unit_name }}车辆{{ type_memo }}单</title>
+    <style>
+        @page {
+            size: letter landscape;
+            margin: 3.18cm;
+        }
+
+        * {
+            font-family: STSong-Light;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align:center; font-size: 24px">{{ unit_name }}车辆{{ type_memo }}单</div>
+    <table border="1" cellspacing="0">
+        <tr>
+            <td rowspan="2" style="width: 5%;text-align: center;">单位</td>
+            <td rowspan="2" style="width: 15%;padding: 3px;text-align: center;">
+                {% for item in unit_name_ls %}
+                    <span>{{ item }}</span><br/>
+                {% endfor %}
+            </td>
+            <td style="width: 10%; text-align: center; padding-top: 6px;">车辆名称</td>
+            <td style="width: 10%;text-align: center; padding-top: 6px;">{{ car_type }}</td>
+            <td rowspan="2" style="width: 10%; text-align:center;">驾驶员</td>
+            <td rowspan="2" style="text-align: center;">{{ name_copy }}</td>
+        </tr>
+        <tr>
+            <td style="width: 15%;text-align: center; padding-top: 6px;">车牌号</td>
+            <td style="width: 15%;text-align: center; padding-top: 6px;">{{ palte_number }}</td>
+        </tr>
+        <tr>
+            <td rowspan="2" style="text-align: center;">车辆<br/>{{ type_memo_ }}<br/>
+                {% if type_memo_ == "维修" or type_memo_ == "保养" %}
+                    部位<br/>
+                {% endif %}
+                情况
+            </td>
+            <td rowspan="2" colspan="4">
+                <div>&nbsp;&nbsp;
+                    {% for item in app_memo_ls %}
+                        <span>{{ item }}</span><br/>
+                    {% endfor %}
+                </div>
+            </td>
+            <td style="padding: 4px;">
+                <div>干部(签字):</div>
+                {% if officer.comment != '' %}
+                    <div>{{ officer.comment }}</div>
+                {% else %}
+                    <div>&nbsp;</div>
+                {% endif %}
+                <div>
+                    <div>
+                        <div style="display: inline;">{{ officer.name }}</div>
+                        {% if officer.sign_img != '' %}
+                            <div style="width: 160px; height: 40px; display: inline;"><img src="{{ officer.sign_img }}" ></div>
+                        {% else %}
+                            <div>&nbsp;</div>
+                        {% endif %}
+                    </div>
+                    <div style="text-align: right;">
+                        {% if officer.sign_time != '' %}
+                            <span>{{ officer.sign_time }}</span>
+                        {% else %}
+                            <span>年&nbsp;月&nbsp;日</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 4px;">
+                <div>驾驶员(签字):</div>
+                <div>
+                    <div>
+                        <div style="display: inline;">{{ driver.name }}</div>
+                        {% if driver.sign_img %}
+                            <div style="width: 160px; height: 40px; display: inline;"><img src="{{ driver.sign_img }}" ></div>
+                        {% endif %}
+                    </div>
+                    <div style="text-align: right;">{{ driver.sign_time }}</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="4" style="padding: 4px;">
+                <div>首长审批(签字):</div>
+                {% if leader.comment != '' %}
+                    <div>{{ leader.comment }}</div>
+                {% else %}
+                    <div>&nbsp;</div>
+                {% endif %}
+                <div>
+                    <div>
+                        <div style="display: inline;">{{ leader.name }}</div>
+                        {% if leader.sign_img != '' %}
+                            <div style="width: 160px; height: 40px; display: inline;"><img src="{{ leader.sign_img }}" ></div>
+                        {% else %}
+                            <div>&nbsp;</div>
+                        {% endif %}
+                    </div>
+                    <div style="text-align: right;">
+                        {% if leader.sign_time != '' %}
+                            <span>{{ leader.sign_time }}</span>
+                        {% else %}
+                            <span>年&nbsp;月&nbsp;日</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </td>
+            <td style="padding: 4px;">
+                <div style="display:inline;">
+                    <div>财务审核:</div>
+                    <br/>
+                    {% if leader.sign_img %}
+                    <br/>
+                    {% endif %}
+                    <br/>
+                    <div style="text-align: right;">年&nbsp;月&nbsp;日</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    {% for item in pics %}
+        <div style="margin: 50px;"><img src="{{ item }}"></div>
+    {% endfor %}
+</body>
+</html>
